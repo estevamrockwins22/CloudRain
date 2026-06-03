@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — CloudRain</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body { padding-bottom: 80px; }
+        .page-header {
+            padding: 32px 0 24px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 28px;
+        }
+        .page-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin: 4px 0 0;
+        }
+        .section-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        .section-card h4 {
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* Admin card */
+        .admin-card {
+            background: linear-gradient(135deg, var(--bg-surface), rgba(90,122,94,0.07));
+            border-color: var(--border-accent) !important;
+        }
+        .admin-card h4 { color: var(--accent); }
+        .admin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-glow);
+            border: 1px solid var(--border-accent);
+            color: var(--accent);
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        /* Upload area */
+        #musica {
+            cursor: pointer;
+        }
+        .upload-hint {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-top: 6px;
+        }
+        /* músicas vazia */
+        #listaMusicas {
+            min-height: 60px;
+            padding: 0;
+        }
+        .list-group-flush .list-group-item:first-child { border-top: none; }
+        .list-group-flush .list-group-item:last-child { border-bottom: none; }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand logo" href="dashboard.html">☁️ CloudRain</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" aria-label="Menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="menu" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                <li class="nav-item"><a class="nav-link active" href="dashboard.html">Meus Uploads</a></li>
+            </ul>
+            <div class="d-flex align-items-center gap-3">
+                <span id="nomeUsuario" class="small" style="color: var(--text-secondary);"></span>
+                <button class="btn btn-sm btn-outline-secondary" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid px-4">
+
+    <div class="page-header">
+        <h2>Meu Estúdio</h2>
+        <p>Gerencie suas músicas e uploads</p>
+    </div>
+
+    <!-- Upload -->
+    <div class="section-card">
+        <h4>🎵 Enviar Música</h4>
+        <div id="mensagem"></div>
+        <form id="uploadForm" novalidate>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label" for="titulo">Título da música</label>
+                    <input type="text" class="form-control" id="titulo"
+                           required placeholder="Ex: Chuva de Verão">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label" for="musica">Arquivo de áudio</label>
+                    <input type="file" class="form-control" id="musica"
+                           accept=".mp3,.wav,.ogg,.flac,audio/*" required>
+                    <p class="upload-hint">MP3, WAV, OGG ou FLAC — máximo 50MB</p>
+                </div>
+            </div>
+            <button type="submit" class="btn-cloud mt-3">Enviar música →</button>
+        </form>
+    </div>
+
+    <!-- Lista de músicas -->
+    <div class="section-card">
+        <h4>📁 Minhas Músicas</h4>
+        <ul id="listaMusicas"></ul>
+    </div>
+
+    <!-- Painel Admin (oculto por padrão) -->
+    <div id="painelAdmin" class="section-card admin-card" style="display:none;">
+        <h4>
+            🔐 Painel Administrativo
+            <span class="admin-badge">ADMIN</span>
+        </h4>
+        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
+            Você tem acesso completo à plataforma. Gerencie playlists, músicas e usuários via API.
+        </p>
+        <div class="d-flex gap-2 flex-wrap">
+            <a href="#" class="btn btn-sm btn-outline-success">Gerenciar Playlists</a>
+            <a href="#" class="btn btn-sm btn-outline-secondary">Ver todos os uploads</a>
+        </div>
+        <div style="margin-top: 1rem; padding: 12px 16px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">
+                <strong style="color: var(--text-secondary);">Endpoints admin:</strong>
+                POST /playlists · POST /playlists/:id/musicas · DELETE /playlists/:id
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Player fixo no rodapé -->
+<div id="barraPlayer">
+    <span id="tituloPlayer"></span>
+    <audio id="playerGlobal" controls></audio>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

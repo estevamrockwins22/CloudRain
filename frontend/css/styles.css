@@ -1,0 +1,618 @@
+/* ════════════════════════════════════════════
+   CloudRain — Design System
+   Tema: Dark music platform, refined & modern
+   ════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+/* ── Tokens ──────────────────────────────── */
+:root {
+    /* Cores principais */
+    --bg-base:        #0d0f0e;   /* fundo principal  */
+    --bg-surface:     #141916;   /* cards, modais    */
+    --bg-elevated:    #1c211e;   /* inputs, itens    */
+    --bg-hover:       #242b27;   /* hover sutil      */
+
+    /* Primária: verde musgo profundo */
+    --primary:        #5a7a5e;
+    --primary-light:  #7da882;
+    --primary-dark:   #3f5942;
+    --primary-glow:   rgba(90, 122, 94, 0.25);
+
+    /* Destaque: verde neon suave */
+    --accent:         #8fbc8f;
+    --accent-bright:  #a8d5a2;
+
+    /* Textos — ACESSIBILIDADE GARANTIDA */
+    --text-primary:   #f0f4f0;   /* contraste 14:1 sobre bg-base */
+    --text-secondary: #9eb09f;   /* contraste 5.5:1 — AA pass   */
+    --text-muted:     #6b7d6c;   /* contraste 3.5:1 — uso cuidadoso */
+    --text-inverse:   #0d0f0e;
+
+    /* Estados */
+    --success:        #6dbf72;
+    --success-bg:     rgba(109, 191, 114, 0.12);
+    --danger:         #e07070;
+    --danger-bg:      rgba(224, 112, 112, 0.12);
+    --warning:        #e0b870;
+
+    /* Bordas */
+    --border-subtle:  rgba(255,255,255,0.06);
+    --border-default: rgba(255,255,255,0.10);
+    --border-strong:  rgba(255,255,255,0.18);
+    --border-accent:  rgba(90, 122, 94, 0.40);
+
+    /* Sombras */
+    --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+    --shadow-md:  0 4px 16px rgba(0,0,0,0.5);
+    --shadow-lg:  0 8px 32px rgba(0,0,0,0.6);
+    --shadow-glow: 0 0 24px var(--primary-glow);
+
+    /* Tipografia */
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+
+    /* Transições */
+    --transition: 0.2s ease;
+    --transition-slow: 0.4s ease;
+
+    /* Raios */
+    --radius-sm:  6px;
+    --radius-md:  12px;
+    --radius-lg:  20px;
+    --radius-xl:  28px;
+}
+
+/* ── Reset e Base ────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Links ───────────────────────────────── */
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+a:hover {
+    color: var(--accent-bright);
+    text-decoration: underline;
+}
+
+/* ══════════════════════════════════════════
+   NAVBAR
+   ══════════════════════════════════════════ */
+.navbar {
+    background: rgba(13, 15, 14, 0.92) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-brand.logo,
+.navbar-brand {
+    font-family: var(--font-display) !important;
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: var(--accent) !important;
+    letter-spacing: -0.5px;
+}
+
+/* Nav links — contraste adequado */
+.nav-link {
+    color: var(--text-secondary) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 6px 14px !important;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition), background var(--transition);
+}
+.nav-link:hover,
+.nav-link.active {
+    color: var(--text-primary) !important;
+    background: var(--bg-hover);
+}
+
+.navbar-toggler {
+    border-color: var(--border-default);
+}
+.navbar-toggler-icon {
+    filter: invert(0.8);
+}
+
+/* ══════════════════════════════════════════
+   HERO
+   ══════════════════════════════════════════ */
+.hero {
+    padding: 120px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fundo com gradiente sutil — não escuro sobre escuro */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(90,122,94,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(90,122,94,0.08) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 800;
+    color: var(--text-primary);            /* branco quente — contraste máximo */
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+.hero p {
+    font-size: 1.15rem;
+    color: var(--text-secondary);          /* cinza claro legível */
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+/* ══════════════════════════════════════════
+   BOTÕES
+   ══════════════════════════════════════════ */
+.btn-cloud {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    padding: 13px 30px;
+    border-radius: var(--radius-xl);
+    background: var(--primary);
+    color: #ffffff;                        /* branco puro — contraste 7:1 */
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    box-shadow: 0 2px 12px var(--primary-glow);
+    position: relative;
+}
+.btn-cloud:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+    color: #ffffff;
+    text-decoration: none;
+}
+.btn-cloud:active {
+    transform: translateY(0);
+}
+
+/* Variantes Bootstrap override */
+.btn.btn-cloud {
+    color: #ffffff !important;
+}
+.btn-cloud:hover {
+    color: #ffffff !important;
+}
+
+/* Botão outline */
+.btn-outline-secondary {
+    border-color: var(--border-default) !important;
+    color: var(--text-secondary) !important;
+    background: transparent;
+}
+.btn-outline-secondary:hover {
+    border-color: var(--border-strong) !important;
+    color: var(--text-primary) !important;
+    background: var(--bg-elevated) !important;
+}
+
+/* Botão outline danger */
+.btn-outline-danger {
+    border-color: rgba(224,112,112,0.4) !important;
+    color: var(--danger) !important;
+}
+.btn-outline-danger:hover {
+    background: var(--danger-bg) !important;
+    border-color: var(--danger) !important;
+    color: var(--danger) !important;
+}
+
+/* Botão outline light → para listas */
+.btn-outline-light {
+    border-color: var(--border-default) !important;
+    color: var(--text-primary) !important;
+}
+.btn-outline-light:hover {
+    background: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Botão outline success */
+.btn-outline-success {
+    border-color: rgba(90,122,94,0.5) !important;
+    color: var(--accent) !important;
+}
+.btn-outline-success:hover {
+    background: var(--primary-glow) !important;
+    color: var(--accent-bright) !important;
+}
+
+/* ══════════════════════════════════════════
+   SEÇÕES
+   ══════════════════════════════════════════ */
+.section-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.5px;
+}
+
+/* ══════════════════════════════════════════
+   PLAYLIST CARDS
+   ══════════════════════════════════════════ */
+.playlist-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    transition: background var(--transition), border-color var(--transition), transform var(--transition);
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+}
+.playlist-card:hover {
+    background: var(--bg-elevated);
+    border-color: var(--border-accent);
+    transform: translateY(-3px);
+}
+.playlist-card h4 {
+    color: var(--text-primary);           /* garantido legível */
+    font-family: var(--font-display);
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+}
+.playlist-card p {
+    color: var(--text-secondary);         /* cinza claro legível */
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* ══════════════════════════════════════════
+   PLAYER (index.html)
+   ══════════════════════════════════════════ */
+.player {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    padding: 28px;
+    border-radius: var(--radius-lg);
+}
+.player h4 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.player audio {
+    width: 100%;
+    filter: invert(0.85) hue-rotate(90deg) brightness(0.9);
+}
+
+/* ══════════════════════════════════════════
+   FORMULÁRIOS — contraste total garantido
+   ══════════════════════════════════════════ */
+.form-label {
+    color: var(--text-secondary) !important;
+    font-size: 0.88rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+}
+
+.form-control {
+    background: var(--bg-elevated) !important;
+    border: 1px solid var(--border-default) !important;
+    color: var(--text-primary) !important;  /* texto digitado SEMPRE legível */
+    border-radius: var(--radius-sm) !important;
+    padding: 10px 14px !important;
+    font-size: 0.95rem !important;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.form-control:focus {
+    background: var(--bg-elevated) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px var(--primary-glow) !important;
+    outline: none;
+}
+.form-control::placeholder {
+    color: var(--text-muted) !important;
+}
+/* Autocomplete override */
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--bg-elevated) inset !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+}
+
+.form-text {
+    color: var(--text-muted) !important;
+    font-size: 0.82rem;
+}
+
+/* ══════════════════════════════════════════
+   CARDS GENÉRICOS
+   ══════════════════════════════════════════ */
+.card {
+    background: var(--bg-surface) !important;
+    border: 1px solid var(--border-subtle) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-md);
+    color: var(--text-primary) !important;
+}
+
+/* Card admin */
+#painelAdmin.card {
+    border-color: var(--border-accent) !important;
+    background: linear-gradient(135deg, var(--bg-surface), rgba(90,122,94,0.06)) !important;
+}
+#painelAdmin h4 {
+    color: var(--accent) !important;
+}
+
+/* ══════════════════════════════════════════
+   LIST GROUP — dashboard músicas
+   ══════════════════════════════════════════ */
+.list-group-item {
+    background: var(--bg-elevated) !important;
+    border-color: var(--border-subtle) !important;
+    color: var(--text-primary) !important;  /* texto SEMPRE legível */
+    padding: 14px 16px;
+    transition: background var(--transition);
+}
+.list-group-item:hover {
+    background: var(--bg-hover) !important;
+}
+.list-group-item strong {
+    color: var(--text-primary) !important;
+}
+/* Itens especiais */
+.list-item-loading,
+.list-item-empty,
+.list-item-error {
+    list-style: none;
+    padding: 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+.list-item-loading { color: var(--text-secondary); background: var(--bg-elevated); }
+.list-item-empty   { color: var(--text-muted); background: var(--bg-elevated); }
+.list-item-error   { color: var(--danger); background: var(--danger-bg); }
+
+/* Itens de música customizados */
+.music-item {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    transition: background var(--transition);
+}
+.music-item:hover {
+    background: var(--bg-hover);
+}
+.music-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+}
+.music-title {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.92rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+.btn-play {
+    background: var(--primary-glow);
+    border: 1px solid var(--border-accent);
+    color: var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 4px 12px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition);
+}
+.btn-play:hover {
+    background: var(--primary);
+    color: #fff;
+}
+.btn-delete {
+    background: transparent;
+    border: 1px solid rgba(224,112,112,0.35);
+    color: var(--danger);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background var(--transition);
+    flex-shrink: 0;
+}
+.btn-delete:hover {
+    background: var(--danger-bg);
+}
+
+/* ══════════════════════════════════════════
+   PLAYER FIXO (dashboard)
+   ══════════════════════════════════════════ */
+#barraPlayer {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(20, 25, 22, 0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-subtle);
+    padding: 12px 24px;
+    align-items: center;
+    gap: 16px;
+    z-index: 999;
+}
+#tituloPlayer {
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    font-weight: 500;
+    min-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#barraPlayer audio {
+    flex: 1;
+    height: 36px;
+    filter: invert(0.85) hue-rotate(90deg) brightness(0.9);
+}
+
+/* ══════════════════════════════════════════
+   ALERTAS / MENSAGENS
+   ══════════════════════════════════════════ */
+.alert {
+    border: none !important;
+    border-radius: var(--radius-sm) !important;
+    font-size: 0.9rem;
+    padding: 12px 16px;
+}
+.alert-success {
+    background: var(--success-bg) !important;
+    color: var(--success) !important;
+    border-left: 3px solid var(--success) !important;
+}
+.alert-danger {
+    background: var(--danger-bg) !important;
+    color: var(--danger) !important;
+    border-left: 3px solid var(--danger) !important;
+}
+
+/* Alertas customizados (login/register) */
+.alert-erro {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--danger-bg);
+    border-left: 3px solid var(--danger);
+    border-radius: var(--radius-sm);
+    color: var(--danger);
+    font-size: 0.9rem;
+}
+.alert-sucesso {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: var(--success-bg);
+    border-left: 3px solid var(--success);
+    border-radius: var(--radius-sm);
+    color: var(--success);
+    font-size: 0.9rem;
+}
+
+/* ══════════════════════════════════════════
+   TEXT OVERRIDES — Bootstrap conflict fixes
+   ══════════════════════════════════════════ */
+.text-secondary {
+    color: var(--text-secondary) !important;  /* sobreescreve Bootstrap #6c757d */
+}
+.text-muted {
+    color: var(--text-muted) !important;
+}
+.text-light {
+    color: var(--text-primary) !important;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    font-family: var(--font-display);
+}
+
+/* Small text */
+.small, small {
+    color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVO
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 0 60px;
+    }
+    .hero h1 {
+        font-size: 2.2rem;
+        letter-spacing: -0.5px;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .section-title {
+        font-size: 1.4rem;
+    }
+    .music-title {
+        max-width: 120px;
+    }
+    #barraPlayer {
+        padding: 10px 16px;
+    }
+    #tituloPlayer {
+        min-width: 80px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ══════════════════════════════════════════
+   SCROLLBAR CUSTOMIZADA
+   ══════════════════════════════════════════ */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-base);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--bg-elevated);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
