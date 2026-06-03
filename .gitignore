@@ -136,6 +136,24 @@ dist
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+# ─── Ambiente e segredos ───────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Dependências ──────────────────────────
+node_modules/
+npm-debug.log*
+
+# ─── Sistema operacional ───────────────────
+.DS_Store
+Thumbs.db
+
+# ─── Editores ──────────────────────────────
+.vscode/
+.idea/
+*.swp
+
 
 # Vite files
 vite.config.js.timestamp-*
